@@ -53,4 +53,21 @@ public class OrderSummary {
 		return orderId;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("OrderSummary [orderId=");
+		builder.append(orderId);
+		builder.append(", orderDate=");
+		builder.append(orderDate);
+		builder.append(", orderStatus=");
+		builder.append(orderStatus);
+		builder.append(", customer=");
+		builder.append(customer);
+		builder.append(", orderAmount=");
+		builder.append(orderAmount);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }

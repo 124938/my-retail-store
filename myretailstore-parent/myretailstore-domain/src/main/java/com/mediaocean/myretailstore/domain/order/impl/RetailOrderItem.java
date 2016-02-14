@@ -34,4 +34,17 @@ public class RetailOrderItem {
 		this.amount = amount;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("RetailOrderItem [product=");
+		builder.append(product);
+		builder.append(", quantity=");
+		builder.append(quantity);
+		builder.append(", amount=");
+		builder.append(amount);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }

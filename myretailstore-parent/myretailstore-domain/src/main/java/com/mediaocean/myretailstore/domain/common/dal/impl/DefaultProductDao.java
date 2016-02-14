@@ -14,11 +14,12 @@ public class DefaultProductDao implements ProductDao {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductDao.class);
 	
+	// TODO - Product Map should get removed as soon as product data is getting fetched from PRODUCT table
 	private Map<String, Product> productMap = new ConcurrentHashMap<String, Product>();
 
 	@Override
 	public Product fetch(String productCode) {
-		// TODO - Instead of DB query using Map to store product against product code
+		// TODO - Below code should get replaced by SELECT query
 		Product product = new Product(productCode);
 		product.setName("Name - "+productCode);
 		product.setDescription("Description - "+productCode);
