@@ -10,7 +10,7 @@
 	<packaging>war</packaging>
 	<name>myretailstore-service</name>
 	<description>Service module of my retail store</description>
-	
+
 	<dependencies>
 		<!-- myretailstore - domain -->
 		<dependency>
@@ -18,7 +18,7 @@
 			<artifactId>myretailstore-domain</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
+
 		<!-- Servlet API -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -38,14 +38,19 @@
 			<artifactId>cxf-rt-rs-service-description</artifactId>
 			<version>${cxf.version}</version>
 		</dependency>
-				
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-rs-client</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+
 		<!-- JSON Marshalling/UnMarshalling dependency -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.jaxrs</groupId>
 			<artifactId>jackson-jaxrs-json-provider</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
-		
+
 		<!-- For Junit with Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -53,12 +58,24 @@
 			<version>${spring.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>  
+            <groupId>org.easymock</groupId>  
+            <artifactId>easymock</artifactId>  
+            <version>3.4</version>
+            <scope>test</scope>  
+        </dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
-		
-	</dependencies>	
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-local</artifactId>
+			<version>${cxf.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
 </project>
