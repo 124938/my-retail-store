@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 import com.mediaocean.myretailstore.domain.order.Order;
@@ -11,6 +13,8 @@ import com.mediaocean.myretailstore.domain.order.OrderSummary;
 import com.mediaocean.myretailstore.domain.order.dal.impl.RetailOrderDao;
 
 public class RetailOrder implements Order {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(RetailOrder.class);
 	
 	private final RetailOrderDao retailOrderDao;
 	
@@ -44,13 +48,8 @@ public class RetailOrder implements Order {
 		// Calculation of item wise amount, total amount etc.
 		BigDecimal totalAmount = new BigDecimal(0);
 		for (RetailOrderItem item : retailOrderItemList) {
-			BigDecimal amount;
-			if (item.getProduct().getServiceTax() == null) {
-				amount = new BigDecimal(item.getProduct().getPrice() * item.getQuantity());
-			} else {
-				amount = new BigDecimal( (item.getProduct().getPrice() * item.getQuantity()) + ( item.getProduct().getPrice() * (item.getProduct().getServiceTax() / 100)));
-			}
-			item.setAmount(amount);
+			// Calculate amount
+			item.setAmount(calculateAmount(item));
 			
 			// Add item wise amount to total amount
 			totalAmount = totalAmount.add(item.getAmount());
@@ -59,6 +58,27 @@ public class RetailOrder implements Order {
 		
 		// Update DB
 		retailOrderDao.modify(this);
+	}
+	
+	private BigDecimal calculateAmount(RetailOrderItem item) {
+		Double itemPrice = item.getProduct().getPrice();
+		int itemQty = item.getQuantity();
+
+		BigDecimal amount;
+		Integer itemServiceTax = item.getProduct().getServiceTax();
+		if (itemServiceTax == null) {
+			amount = new BigDecimal(itemPrice * itemQty);
+		} else {
+			amount = new BigDecimal( Double.valueOf(itemPrice * itemQty) + (itemPrice * itemQty * (itemServiceTax / 100d)));
+		}
+		
+		LOGGER.debug("Amount calculated for Product Code : {} is -> {}", item.getProduct().getCode(), amount);
+		return amount;
+	}
+	
+	public static void main(String args[]) {
+		BigDecimal amount = new BigDecimal( Double.valueOf(50 * 25) + Double.valueOf(50 * 25 * (10/100d)));
+		System.out.println(amount);
 	}
 
 }

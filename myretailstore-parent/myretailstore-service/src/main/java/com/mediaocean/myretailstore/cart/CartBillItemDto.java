@@ -7,10 +7,10 @@ public class CartBillItemDto {
 	private final String name;
 	private final Double price;
 	private final int qty;
-	private final Float serviceTax;
+	private final Integer serviceTax;
 	private final BigDecimal amount;
 	
-	public CartBillItemDto(String name, Double price, int qty, Float serviceTax, BigDecimal amount) {
+	public CartBillItemDto(String name, Double price, int qty, Integer serviceTax, BigDecimal amount) {
 		this.name = name;
 		this.price = price;
 		this.qty = qty;
@@ -26,7 +26,7 @@ public class CartBillItemDto {
 		return qty;
 	}
 
-	public Float getServiceTax() {
+	public Integer getServiceTax() {
 		return serviceTax;
 	}
 

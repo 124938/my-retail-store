@@ -5,8 +5,8 @@ public class Product {
 	private String code;
 	private String name;
 	private String description;
-	private String category;
-	private Float serviceTax;
+	private ProductCategory category;
+	private Integer serviceTax;
 	private Double price;
 
 	public Product(String code) {
@@ -29,19 +29,20 @@ public class Product {
 		this.description = description;
 	}
 
-	public String getCategory() {
+	public ProductCategory getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(ProductCategory category) {
 		this.category = category;
+		this.serviceTax = category.getDefaultTax();
 	}
 
-	public Float getServiceTax() {
+	public Integer getServiceTax() {
 		return serviceTax;
 	}
 
-	public void setServiceTax(Float serviceTax) {
+	public void setServiceTax(Integer serviceTax) {
 		this.serviceTax = serviceTax;
 	}
 
