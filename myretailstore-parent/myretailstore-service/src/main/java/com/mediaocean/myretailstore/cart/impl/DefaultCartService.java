@@ -1,14 +1,9 @@
 package com.mediaocean.myretailstore.cart.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.mediaocean.myretailstore.cart.CartBillDto;
-import com.mediaocean.myretailstore.cart.CartBillItemDto;
-import com.mediaocean.myretailstore.cart.CartBillSummaryDto;
 import com.mediaocean.myretailstore.cart.CartDto;
 import com.mediaocean.myretailstore.cart.CartItemDto;
 import com.mediaocean.myretailstore.cart.CartService;
@@ -43,32 +38,22 @@ public class DefaultCartService implements CartService {
 
 	@Override
 	public CartDto fetchCartDetails(long cartId) {
-		LOGGER.debug("Cart Id received from client is -> {}", cartId);
 		
+		// Fetch existing cart details using cart identification i.e. cart id
 		return fetchCart(cartId);
 	}
 	
 	private CartDto fetchCart(long cartId) {
 		// Fetch order based upon cart id i.e. order id
+		LOGGER.debug("Cart Details to be fetched for cart Id -> {}", cartId);
 		Order order = orderRepository.fetchOrder(cartId);
 		
 		// Prepare DTO to send to client
 		if (order instanceof RetailOrder) {
 			RetailOrder retailOrder = (RetailOrder) order;
-			
-			CartDto cart = new CartDto(retailOrder.getOrderSummary().getOrderId());
-			
-			List<CartItemDto> itemList = new ArrayList<CartItemDto>();
-			for (RetailOrderItem item : retailOrder.getRetailOrderItemList()) {
-				CartItemDto cartItem = new CartItemDto();
-				cartItem.setCode(item.getProduct().getCode());
-				cartItem.setQuantity(item.getQuantity());
-				
-				itemList.add(cartItem);
-			}
-			cart.setItemList(itemList);
 
-			return cart;
+			// Transform Retail Order to Cart DTO
+			return new CartDtoTransformer().transform(retailOrder);
 		} else {
 			throw new RuntimeException("As of now only retail order has been supported by system");
 		}
@@ -104,7 +89,10 @@ public class DefaultCartService implements CartService {
 		}
 		
 		if (!isProductPresent) {
+			// Fetch product details from product repository
 			Product newProduct = productRepository.fetchProductDetails(cartItem.getCode());
+			
+			// Prepare Retail Order Item
 			RetailOrderItem item = new RetailOrderItem();
 			item.setProduct(newProduct);
 			item.setQuantity(cartItem.getQuantity());
@@ -123,22 +111,10 @@ public class DefaultCartService implements CartService {
 			RetailOrder retailOrder = (RetailOrder) order;
 			
 			// Prepare Cart Bill DTO
-			return generateBill(retailOrder);
+			return new CartBillDtoTransformer().transform(retailOrder);
 		} else {
 			throw new RuntimeException("As of now only retail order has been supported by system");
 		}
 	}
 	
-	private CartBillDto generateBill(RetailOrder retailOrder) {
-		CartBillSummaryDto billSummary = new CartBillSummaryDto(retailOrder.getOrderSummary().getOrderId(), retailOrder.getOrderSummary().getOrderDate(), retailOrder.getOrderSummary().getOrderAmount());
-		
-		CartBillDto cartBill = new CartBillDto(billSummary);
-		for (RetailOrderItem item : retailOrder.getRetailOrderItemList()) {
-			CartBillItemDto billItem = new CartBillItemDto(item.getProduct().getName(), item.getProduct().getPrice(), item.getQuantity(), item.getProduct().getServiceTax(), item.getAmount());
-			cartBill.addCartBillDetails(billItem);
-		}
-		
-		return cartBill;
-	}
-
 }
