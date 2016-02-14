@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.mediaocean.myretailstore</groupId>
+	<artifactId>myretailstore-parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>myretailstore-parent</name>
+	<description>Parent project for my retail store</description>
+
+	<properties>
+		<!-- Servlet API version -->
+		<servlet-api.version>3.0.1</servlet-api.version>
+
+		<!-- Spring version -->
+		<spring.version>4.1.4.RELEASE</spring.version>
+
+		<!-- CXF Framework -->
+		<cxf.version>3.1.1</cxf.version>
+
+		<!-- Logging with SLF4J & LogBack -->
+		<slf4j.version>1.7.7</slf4j.version>
+		<logback.version>1.1.2</logback.version>
+
+		<!-- Common Utility -->
+		<commons.dbcp.version>1.4</commons.dbcp.version>
+		<jackson.version>2.0.1</jackson.version>
+
+		<!-- Database -->
+		<mysql.version>5.1.6</mysql.version>
+
+		<!-- Unit testing -->
+		<junit.version>4.11</junit.version>
+	</properties>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!-- Compiler -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<modules>
+		<module>myretailstore-domain</module>
+		<module>myretailstore-service</module>
+	</modules>
+</project>

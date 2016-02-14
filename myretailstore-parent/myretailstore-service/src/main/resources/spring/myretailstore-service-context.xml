@@ -1,0 +1,35 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:cxf="http://cxf.apache.org/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+						http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+						http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd 
+						http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd ">
+	
+	<!-- Import domain spring configuration file -->
+	<import resource="classpath:spring/myretailstore-domain-context.xml" />
+    
+	<!-- Cart Service -->
+	<bean id="defaultCartService" class="com.mediaocean.myretailstore.cart.impl.DefaultCartService" >
+	    <constructor-arg ref="defaultOrderRepository" />
+	    <constructor-arg ref="defaultProductRepository" />
+	</bean>
+
+	<jaxrs:server id="defaultCartServiceUrl" address="/cart">
+		<jaxrs:serviceBeans>
+			<ref bean="defaultCartService" />
+		</jaxrs:serviceBeans>
+		<jaxrs:extensionMappings>
+			<entry key="json" value="application/json" />
+		</jaxrs:extensionMappings>
+		<jaxrs:features>
+			<cxf:logging />
+		</jaxrs:features>
+		<jaxrs:providers>
+			<bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider" />
+		</jaxrs:providers>
+	</jaxrs:server>
+
+</beans>

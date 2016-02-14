@@ -1,0 +1,37 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	
+    <context:annotation-config />
+    
+	<!-- Order Repository -->
+	<bean id="defaultOrderRepository" class="com.mediaocean.myretailstore.domain.order.impl.DefaultOrderRepository" >
+	    <constructor-arg ref="defaultCommonOrderDao" />
+	</bean>
+
+	<!-- Product Repository -->
+	<bean id="defaultProductRepository" class="com.mediaocean.myretailstore.domain.common.impl.DefaultProductRepository" >
+	    <constructor-arg ref="defaultProductDao" />
+	</bean>
+			
+	<!-- Retail Order -->
+	<bean id="retailOrder" class="com.mediaocean.myretailstore.domain.order.impl.RetailOrder" scope="prototype">
+	    <constructor-arg ref="retailOrderDao" />
+	</bean>
+
+	<!-- Common Order Dao -->
+	<bean id="defaultCommonOrderDao" class="com.mediaocean.myretailstore.domain.order.dal.impl.DefaultCommonOrderDao" >
+	</bean>
+
+	<!-- Product  Dao -->
+	<bean id="defaultProductDao" class="com.mediaocean.myretailstore.domain.common.dal.impl.DefaultProductDao" >
+	</bean>
+		
+	<!-- Retail Order Dao -->
+	<bean id="retailOrderDao" class="com.mediaocean.myretailstore.domain.order.dal.impl.RetailOrderDao" >
+	    <constructor-arg ref="defaultCommonOrderDao" />	
+	</bean>
+			
+</beans>
