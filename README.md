@@ -1,4 +1,4 @@
-################ Problem Statement ###############
+# ========== Problem Statement ========== 
 Build a RESTful service that implments a check out counter for an online retail store that scans products and generates an itemized bill.
 The bill should also total the cost of all the products and the applicable sales tax for each product.
 The total cost and total sales tax should be printed
@@ -7,7 +7,7 @@ Sales tax varies based on the type of products
 	- category B products carry a levy of 20%
 	- category C products carry no levy
 
-################## Solution ################
+# ========== Solution ========== 
 
 # Step-1: Deploy My Retail Store Service WAR to Tomcat
 - Clone GIT Repository locally using this URL : https://github.com/124938/my-retail-store.git
