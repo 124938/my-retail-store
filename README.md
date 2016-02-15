@@ -3,9 +3,9 @@ Build a RESTful service that implments a check out counter for an online retail 
 The bill should also total the cost of all the products and the applicable sales tax for each product.
 The total cost and total sales tax should be printed
 Sales tax varies based on the type of products
-	- category A products carry a levy of 10%
-	- category B products carry a levy of 20%
-	- category C products carry no levy
+- category A products carry a levy of 10%
+- category B products carry a levy of 20%
+- category C products carry no levy
 
 # ========== Solution ========== 
 
